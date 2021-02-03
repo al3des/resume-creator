@@ -3,11 +3,16 @@ import CustomField from "../sidebar/custom-field";
 import Languages from "../sidebar/languages";
 import PersonalDetails from "../sidebar/personal-details";
 
-let useStyles = makeStyles({
+let useStyles = makeStyles((theme) => ({
   root: {
-    gridArea: "sidebar"
+    gridArea: "sidebar",
+    maxWidth: "80%",
+    margin: "0 auto"
+  },
+  divider: {
+    backgroundColor: theme.palette.primary.main
   }
-});
+}));
 
 let state = {
   personalDetails: {
@@ -48,11 +53,11 @@ export default function Sidebar() {
   return (
     <div className={classes.root}>
       <PersonalDetails personalDetails={state.personalDetails} />
-      <Divider />
+      <Divider className={classes.divider} />
       {state.customFields.map((cf, i) => (
         <CustomField customField={cf} key={i} />
       ))}
-      <Divider />
+      <Divider className={classes.divider} />
       <Languages languages={state.languages} />
     </div>
   );

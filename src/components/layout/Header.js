@@ -7,16 +7,21 @@ let useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gridArea: "header",
-    maxHeight: "100%"
+    gridArea: "header"
+  },
+  title: {
+    margin: 0,
+    textTransform: "uppercase"
   },
   img: {
-    maxWidth: "50%",
-    display: "block"
+    maxWidth: "100px",
+    display: "block",
+    borderRadius: "50%"
   },
   p: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    margin: 0
   }
 });
 
@@ -30,7 +35,7 @@ export default function Header() {
         src="https://avatars.dicebear.com/api/male/:seed.svg"
         alt=""
       />
-      <h1>Name</h1>
+      <h1 className={classes.title}>Alejandro Desalvo</h1>
       <p className={classes.p}>
         Frontend Developer <LocationOnIcon /> Address | phone
       </p>
