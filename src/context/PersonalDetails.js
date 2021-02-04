@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
-import usePersonalDetails from "../hooks/usePersonalDetails";
+import usePersonalDetails from "../hooks/usePersonalDetails"
 
-export const PersonalDetails = React.createContext({});
+export const PersonalDetailsContext = React.createContext({})
 
 export default function PersonalDetailsProvider({ children }) {
-  let [state, dispatch] = usePersonalDetails();
+  let [personalDetails, dispatch] = usePersonalDetails()
 
   return (
-    <PersonalDetails.Provider value={{ state, dispatch }}>
+    <PersonalDetailsContext.Provider value={{ personalDetails, dispatch }}>
       {children}
-    </PersonalDetails.Provider>
-  );
+    </PersonalDetailsContext.Provider>
+  )
 }
