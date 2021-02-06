@@ -1,13 +1,17 @@
-import { useState } from "react";
-import "./styles.css";
+import { useState } from "react"
+import "./styles.css"
 
-import Header from "./components/layout/Header";
-import Sidebar from "./components/layout/Sidebar";
-import Resume from "./components/layout/Resume";
-import { makeStyles, CssBaseline, Paper, Fab } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import PersonalDetails from "./context/PersonalDetails";
-import Settings from "./components/layout/Settings";
+import Header from "./components/layout/Header"
+import Sidebar from "./components/layout/Sidebar"
+import Resume from "./components/layout/Resume"
+
+import { makeStyles, CssBaseline, Paper, Fab } from "@material-ui/core"
+import EditIcon from "@material-ui/icons/Edit"
+
+import PersonalDetailsProvider from "./context/PersonalDetails"
+import CustomFieldsProvider from "./context/CustomFields"
+
+import Settings from "./components/layout/Settings"
 
 let useStyles = makeStyles((theme) => ({
   root: {
@@ -19,34 +23,36 @@ let useStyles = makeStyles((theme) => ({
     gridTemplateRows: "1fr auto",
     gridTemplateAreas: `"header header header"
      "sidebar resume resume" `,
-    gridGap: theme.spacing(4)
+    gridGap: theme.spacing(4),
   },
   fab: {
     position: "fixed",
     bottom: theme.spacing(2),
-    right: theme.spacing(2)
-  }
-}));
+    right: theme.spacing(2),
+  },
+}))
 
 export default function App() {
-  let [settingsOpen, setSettingsOpen] = useState(false);
-  let classes = useStyles();
+  let [settingsOpen, setSettingsOpen] = useState(false)
+  let classes = useStyles()
   return (
-    <PersonalDetails>
+    <PersonalDetailsProvider>
       <Paper className={classes.root}>
         <CssBaseline />
         <Header />
-        <Sidebar />
+        <CustomFieldsProvider>
+          <Sidebar />
+          <Fab
+            color="secondary"
+            className={classes.fab}
+            onClick={() => setSettingsOpen((s) => !s)}
+          >
+            <EditIcon />
+          </Fab>
+          <Settings open={settingsOpen} setOpen={setSettingsOpen} />
+        </CustomFieldsProvider>
         <Resume />
       </Paper>
-      <Fab
-        color="secondary"
-        className={classes.fab}
-        onClick={(s) => setSettingsOpen(!s)}
-      >
-        <EditIcon />
-      </Fab>
-      <Settings open={settingsOpen} />
-    </PersonalDetails>
-  );
+    </PersonalDetailsProvider>
+  )
 }
