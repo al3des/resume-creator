@@ -23,6 +23,18 @@ export default function usePersonalDetails() {
             ...state,
             customFields: action.inputFields,
           }
+        case "SET_LANGUAGES":
+          return {
+            ...state,
+            languages: action.inputFields,
+          }
+
+        case "ADD_BLANK_FIELD":
+          return {
+            ...state,
+            customFields: [...state.customFields, action.blankTemplate],
+          }
+
         default:
           return state
       }
@@ -33,6 +45,7 @@ export default function usePersonalDetails() {
       address: { street: "", city: "", country: "" },
       phone: "",
       email: "",
+      customFields: [{ fieldTitle: "", fieldValue: "" }],
     }
   )
 

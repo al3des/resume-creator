@@ -45,7 +45,7 @@ let state = {
 
 export default function Sidebar() {
   let { personalDetails } = useContext(PersonalDetailsContext)
-  let { customFields } = personalDetails
+  let { customFields, languages } = personalDetails
   let classes = useStyles()
   return (
     <div className={classes.root}>
@@ -54,7 +54,7 @@ export default function Sidebar() {
       {customFields &&
         customFields.map((field) => <CustomField customField={field} />)}
       <Divider className={classes.divider} />
-      <Languages languages={state.languages} />
+      <Languages languages={languages} />
     </div>
   )
 }

@@ -46,7 +46,7 @@ export default function Settings({ open, setOpen }) {
       <Divider />
       <PersonalDetails />
       <CustomFields />
-      {/* <LanguageSettings /> */}
+      <LanguageSettings />
     </Drawer>
   )
 }

@@ -27,12 +27,10 @@ let useStyles = makeStyles((theme) => ({
 }))
 
 export default function CustomFieldsSettings() {
-  let { dispatch } = useContext(PersonalDetailsContext)
-
-  let [inputFields, setInputFields] = useState([
-    { fieldTitle: "", fieldValue: "" },
-  ])
-  let [saved, setSaved] = useState(false)
+  let { personalDetails, dispatch } = useContext(PersonalDetailsContext)
+  let { customFields } = personalDetails
+  let [inputFields, setInputFields] = useState(customFields)
+  let [saved, setSaved] = useState(true)
 
   function handleInputChange(i, e) {
     const values = [...inputFields]
@@ -46,17 +44,23 @@ export default function CustomFieldsSettings() {
     setSaved((s) => !s)
     dispatch({ type: "SET_CUSTOM_FIELDS", inputFields })
     console.log("inputFields", inputFields)
+    console.log("customFields:", customFields)
   }
 
   function handleAddField() {
     setInputFields([...inputFields, { fieldTitle: "", fieldValue: "" }])
-    setSaved(false)
+    // dispatch({
+    //   type: "ADD_BLANK_FIELD",
+    //   blankTemplate: { fieldTitle: "", fieldValue: "" },
+    // })
+    // setSaved(false)
   }
 
   function handleRemoveField(i) {
     const values = [...inputFields]
     values.splice(i, 1)
     setInputFields(values)
+    // dispatch({ type: "SET_CUSTOM_FIELDS", inputFields: values })
     setSaved(false)
   }
 
@@ -94,7 +98,7 @@ export default function CustomFieldsSettings() {
                   </IconButton>
                   <IconButton
                     onClick={(i) => handleRemoveField(i)}
-                    disabled={inputFields.length < 2}
+                    disabled={customFields.length < 2}
                   >
                     <RemoveIcon />
                   </IconButton>
