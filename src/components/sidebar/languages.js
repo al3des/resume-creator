@@ -11,16 +11,17 @@ export default function Languages({ languages }) {
   return (
     <div className={classes.root}>
       <h2>languages</h2>
-      {languages.map((lang) => (
-        <div key={lang.name}>
-          <h3>{lang.language}</h3>
-          <LinearProgress
-            variant="determinate"
-            color="secondary"
-            value={lang.level}
-          />
-        </div>
-      ))}
+      {languages &&
+        languages.map((lang) => (
+          <div key={lang.name}>
+            <h3>{lang.language}</h3>
+            <LinearProgress
+              variant="determinate"
+              color="secondary"
+              value={lang.level}
+            />
+          </div>
+        ))}
     </div>
   )
 }

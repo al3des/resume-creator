@@ -5,6 +5,9 @@ import CustomFields from "./settings/custom-fields"
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import LanguageSettings from "./settings/languages"
+import ProfileSettings from "./settings/profile"
+import WorkHistorySettings from "./settings/work-history"
+import EducationSettings from "./settings/education"
 
 let useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +46,13 @@ export default function Settings({ open, setOpen }) {
         />
         Settings
       </Typography>
+      <EducationSettings />
+      <WorkHistorySettings />
       <Divider />
       <PersonalDetails />
+      <Divider />
+      <ProfileSettings />
+      <Divider />
       <CustomFields />
       <LanguageSettings />
     </Drawer>

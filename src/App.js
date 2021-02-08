@@ -9,7 +9,6 @@ import { makeStyles, CssBaseline, Paper, Fab } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit"
 
 import PersonalDetailsProvider from "./context/PersonalDetails"
-import CustomFieldsProvider from "./context/CustomFields"
 
 import Settings from "./components/layout/Settings"
 
@@ -40,17 +39,15 @@ export default function App() {
       <Paper className={classes.root}>
         <CssBaseline />
         <Header />
-        <CustomFieldsProvider>
-          <Sidebar />
-          <Fab
-            color="secondary"
-            className={classes.fab}
-            onClick={() => setSettingsOpen((s) => !s)}
-          >
-            <EditIcon />
-          </Fab>
-          <Settings open={settingsOpen} setOpen={setSettingsOpen} />
-        </CustomFieldsProvider>
+        <Sidebar />
+        <Fab
+          color="secondary"
+          className={classes.fab}
+          onClick={() => setSettingsOpen((s) => !s)}
+        >
+          <EditIcon />
+        </Fab>
+        <Settings open={settingsOpen} setOpen={setSettingsOpen} />
         <Resume />
       </Paper>
     </PersonalDetailsProvider>

@@ -6,7 +6,6 @@ import Languages from "../sidebar/languages"
 import PersonalDetails from "../sidebar/personal-details"
 
 import { PersonalDetailsContext } from "../../context/PersonalDetails"
-import { CustomFieldsContext } from "../../context/CustomFields"
 
 let useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +51,9 @@ export default function Sidebar() {
       <PersonalDetails personalDetails={personalDetails} />
       <Divider className={classes.divider} />
       {customFields &&
-        customFields.map((field) => <CustomField customField={field} />)}
+        customFields.map((field, i) => (
+          <CustomField key={i} customField={field} />
+        ))}
       <Divider className={classes.divider} />
       <Languages languages={languages} />
     </div>

@@ -18,6 +18,20 @@ export default function usePersonalDetails() {
             phone: action?.phone || state.phone,
             email: action?.email || state.email,
           }
+        case "SET_PROFILE":
+          return {
+            ...state,
+            sections: state.sections.map((section) => {
+              if (section.name === "Profile") {
+                return {
+                  ...section,
+                  items: [{ text: action.profile }],
+                }
+              }
+              return section
+            }),
+          }
+
         case "SET_CUSTOM_FIELDS":
           return {
             ...state,
@@ -27,6 +41,34 @@ export default function usePersonalDetails() {
           return {
             ...state,
             languages: action.inputFields,
+          }
+
+        case "SET_WORK_HISTORY":
+          return {
+            ...state,
+            sections: state.sections.map((section) => {
+              if (section.name === "Work History") {
+                return {
+                  ...section,
+                  items: action.inputFields,
+                }
+              }
+              return section
+            }),
+          }
+
+        case "SET_EDUCATION":
+          return {
+            ...state,
+            sections: state.sections.map((section) => {
+              if (section.name === "Education") {
+                return {
+                  ...section,
+                  items: action.inputFields,
+                }
+              }
+              return section
+            }),
           }
 
         case "ADD_BLANK_FIELD":
@@ -46,6 +88,37 @@ export default function usePersonalDetails() {
       phone: "",
       email: "",
       customFields: [{ fieldTitle: "", fieldValue: "" }],
+      sections: [
+        { name: "Profile", icon: "person", items: [{ text: "" }] },
+        {
+          name: "Work History",
+          icon: "work",
+          items: [
+            {
+              title: "",
+              location: "",
+              institution: "",
+              text: "",
+              from: "",
+              to: "",
+            },
+          ],
+        },
+        {
+          name: "Education",
+          icon: "school",
+          items: [
+            {
+              title: "",
+              location: "",
+              institution: "",
+              text: "",
+              from: "",
+              to: "",
+            },
+          ],
+        },
+      ],
     }
   )
 

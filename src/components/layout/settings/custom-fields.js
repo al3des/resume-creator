@@ -43,8 +43,6 @@ export default function CustomFieldsSettings() {
     e.preventDefault()
     setSaved((s) => !s)
     dispatch({ type: "SET_CUSTOM_FIELDS", inputFields })
-    console.log("inputFields", inputFields)
-    console.log("customFields:", customFields)
   }
 
   function handleAddField() {

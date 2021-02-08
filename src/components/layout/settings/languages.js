@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { Fragment, useContext, useState } from "react"
 import {
   Select,
   Typography,
@@ -39,14 +39,12 @@ export default function LanguageSettings() {
     values[i][e.target.name] = e.target.value
     setInputFields(values)
     setSaved(false)
-    console.log(inputFields)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
     setSaved((s) => !s)
     dispatch({ type: "SET_LANGUAGES", inputFields })
-    console.log("inputFields", inputFields)
   }
 
   function handleAddField() {
@@ -71,7 +69,7 @@ export default function LanguageSettings() {
       <form onSubmit={(e) => handleSubmit(e)}>
         {inputFields &&
           inputFields.map((field, i) => (
-            <>
+            <Fragment key={i}>
               <TextField
                 name="language"
                 label="language name"
@@ -102,7 +100,7 @@ export default function LanguageSettings() {
                   <RemoveIcon />
                 </IconButton>
               </Box>
-            </>
+            </Fragment>
           ))}
         <Button
           variant="contained"
