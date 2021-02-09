@@ -20,6 +20,7 @@ import LanguageSettings from "./settings/languages"
 import ProfileSettings from "./settings/profile"
 import WorkHistorySettings from "./settings/work-history"
 import EducationSettings from "./settings/education"
+import SkillsSettings from "./settings/skills"
 
 let useStyles = makeStyles((theme) => ({
   root: {
@@ -141,6 +142,19 @@ export default function Settings({ open, setOpen }) {
         </AccordionSummary>
         <AccordionDetails>
           <LanguageSettings />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded === "skills"}
+        onChange={handleChange("skills")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="skills">
+          <Typography variant="h5" component="h2">
+            Skills:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <SkillsSettings />
         </AccordionDetails>
       </Accordion>
     </Drawer>

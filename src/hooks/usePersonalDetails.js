@@ -42,6 +42,11 @@ export default function usePersonalDetails() {
             ...state,
             languages: action.inputFields,
           }
+        case "SET_SKILLS":
+          return {
+            ...state,
+            skills: action.inputFields,
+          }
 
         case "SET_WORK_HISTORY":
           return {
