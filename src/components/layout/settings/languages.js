@@ -63,9 +63,6 @@ export default function LanguageSettings() {
 
   return (
     <>
-      <Typography variant="h6" component="h2">
-        Languages{" "}
-      </Typography>
       <form onSubmit={(e) => handleSubmit(e)}>
         {inputFields &&
           inputFields.map((field, i) => (

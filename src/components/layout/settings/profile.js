@@ -23,9 +23,6 @@ export default function ProfileSettings() {
   return (
     <Box>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h5" component="h2">
-          Introduction:
-        </Typography>
         <TextareaAutosize
           rowsMin={10}
           cols={50}

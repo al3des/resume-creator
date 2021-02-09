@@ -1,4 +1,16 @@
-import { Divider, Drawer, makeStyles, Typography } from "@material-ui/core"
+import { useState } from "react"
+
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Divider,
+  Drawer,
+  makeStyles,
+  Typography,
+} from "@material-ui/core"
+
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 import PersonalDetails from "./settings/personal-details"
 import CustomFields from "./settings/custom-fields"
@@ -31,7 +43,13 @@ let useStyles = makeStyles((theme) => ({
 }))
 
 export default function Settings({ open, setOpen }) {
+  let [expanded, setExpanded] = useState(false)
   let classes = useStyles()
+
+  const handleChange = (panel) => (e, isExpanded) => {
+    setExpanded(isExpanded ? panel : false)
+  }
+
   return (
     <Drawer
       anchor="right"
@@ -46,15 +64,85 @@ export default function Settings({ open, setOpen }) {
         />
         Settings
       </Typography>
-      <EducationSettings />
-      <WorkHistorySettings />
-      <Divider />
-      <PersonalDetails />
-      <Divider />
-      <ProfileSettings />
-      <Divider />
-      <CustomFields />
-      <LanguageSettings />
+      <Accordion
+        expanded={expanded === "details"}
+        onChange={handleChange("details")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="details">
+          <Typography variant="h5" component="h2">
+            Personal Details:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <PersonalDetails />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded === "introduction"}
+        onChange={handleChange("introduction")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="introduction">
+          <Typography variant="h5" component="h2">
+            Introduction:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <ProfileSettings />
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "education"}
+        onChange={handleChange("education")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="education">
+          <Typography variant="h5" component="h2">
+            Education:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <EducationSettings />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={expanded === "work"} onChange={handleChange("work")}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="work">
+          <Typography variant="h5" component="h2">
+            Work History:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <WorkHistorySettings />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded === "custom-fields"}
+        onChange={handleChange("custom-fields")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="custom-fields">
+          <Typography variant="h6" component="h2">
+            Add Fields to the sidebar
+          </Typography>
+          <Typography>
+            (place of birth, date of bith, driving license, etc..)
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <CustomFields />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        expanded={expanded === "languages"}
+        onChange={handleChange("languages")}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="languages">
+          <Typography variant="h5" component="h2">
+            Languages:
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <LanguageSettings />
+        </AccordionDetails>
+      </Accordion>
     </Drawer>
   )
 }

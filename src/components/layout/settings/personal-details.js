@@ -21,9 +21,6 @@ export default function PersonalDetailsSettings() {
   let classes = useStyles()
   return (
     <>
-      <Typography variant="h6" component="h2">
-        Personal Information:
-      </Typography>
       <Box className={classes.inputGroup}>
         <TextField
           label="Name"

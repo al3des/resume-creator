@@ -66,9 +66,6 @@ export default function WorkHistorySettings() {
   let classes = useStyles()
   return (
     <Box>
-      <Typography variant="h5" component="h2">
-        Work History:
-      </Typography>
       <form onSubmit={handleSubmit}>
         {inputFields &&
           inputFields.map((field, i) => (

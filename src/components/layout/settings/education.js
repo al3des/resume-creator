@@ -66,9 +66,6 @@ export default function EducationSettings() {
   let classes = useStyles()
   return (
     <Box>
-      <Typography variant="h5" component="h2">
-        Education:
-      </Typography>
       <form onSubmit={handleSubmit}>
         {inputFields &&
           inputFields.map((field, i) => (

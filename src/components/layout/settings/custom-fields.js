@@ -65,12 +65,6 @@ export default function CustomFieldsSettings() {
   let classes = useStyles()
   return (
     <>
-      <Typography variant="h6" component="h2">
-        Add Fields to the sidebar
-      </Typography>
-      <Typography>
-        (place of birth, date of bith, driving license, etc..)
-      </Typography>
       <form onSubmit={(e) => handleSubmit(e)}>
         {inputFields &&
           inputFields.map((field, i) => (
