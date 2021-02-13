@@ -11,13 +11,7 @@ export default function CustomField({ customField }) {
   return (
     <div className={classes.root}>
       <h2>{customField.fieldTitle}</h2>
-      {/* {customField.value.map((value, i) => ( */}
-      <p
-      // key={i}
-      >
-        {customField.fieldValue}
-      </p>
-      {/* ))} */}
+      <p>{customField.fieldValue}</p>
     </div>
   )
 }
