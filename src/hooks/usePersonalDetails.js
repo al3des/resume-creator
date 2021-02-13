@@ -56,7 +56,7 @@ export default function usePersonalDetails() {
       default:
         return state
     }
-  }, savedValues)
+  }, savedValues || {})
 
   return [state, dispatch]
 }
