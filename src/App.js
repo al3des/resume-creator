@@ -1,11 +1,10 @@
 import { useState } from "react"
 import "./styles.css"
 
-import Header from "./components/layout/Header"
 import Sidebar from "./components/layout/Sidebar"
 import Resume from "./components/layout/Resume"
 
-import { makeStyles, CssBaseline, Paper, Fab } from "@material-ui/core"
+import { makeStyles, CssBaseline, Paper, Fab, Box } from "@material-ui/core"
 import EditIcon from "@material-ui/icons/Edit"
 
 import PersonalDetailsProvider from "./context/PersonalDetails"
@@ -20,8 +19,7 @@ let useStyles = makeStyles((theme) => ({
     display: "grid",
     gridTemplateColumns: "4fr 8fr",
     gridTemplateRows: "1fr auto",
-    gridTemplateAreas: `"header header header"
-     "sidebar resume resume" `,
+    gridTemplateAreas: `"sidebar resume resume"`,
     gridGap: theme.spacing(4),
   },
   fab: {
@@ -38,15 +36,17 @@ export default function App() {
     <PersonalDetailsProvider>
       <Paper className={classes.root}>
         <CssBaseline />
-        <Header />
         <Sidebar />
-        <Fab
-          color="secondary"
-          className={classes.fab}
-          onClick={() => setSettingsOpen((s) => !s)}
-        >
-          <EditIcon />
-        </Fab>
+        <Box displayPrint="none">
+          <Fab
+            color="secondary"
+            className={`${classes.fab}`}
+            displayPrint="none"
+            onClick={() => setSettingsOpen((s) => !s)}
+          >
+            <EditIcon />
+          </Fab>
+        </Box>
         <Settings open={settingsOpen} setOpen={setSettingsOpen} />
         <Resume />
       </Paper>
