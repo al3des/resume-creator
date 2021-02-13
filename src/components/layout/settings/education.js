@@ -5,10 +5,9 @@ import {
   makeStyles,
   TextareaAutosize,
   TextField,
-  Typography,
 } from "@material-ui/core"
-import { Fragment, useContext, useState } from "react"
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
+import { Fragment } from "react"
+import { withFormHOC } from "../../../HOCs/FormHOC"
 import SaveButton from "../../utils/SaveButton"
 
 let useStyles = makeStyles((theme) => ({
@@ -20,49 +19,15 @@ let useStyles = makeStyles((theme) => ({
   actionButtons: { display: "flex" },
 }))
 
-let fieldsTemplate = {
-  title: "",
-  institution: "",
-  location: "",
-  text: "",
-  from: "",
-  to: "",
-}
-
-export default function EducationSettings() {
-  let { personalDetails, dispatch } = useContext(PersonalDetailsContext)
-
-  let savedValues = personalDetails.sections.filter(
-    (section) => section.name === "Education"
-  )[0].items
-
-  let [inputFields, setInputFields] = useState(savedValues)
-  let [saved, setSaved] = useState(true)
-
-  function handleSubmit(e) {
-    dispatch({ type: "SET_EDUCATION", inputFields })
-    e.preventDefault()
-  }
-
-  function handleInputChange(i, e) {
-    const values = [...inputFields]
-    values[i][e.target.name] = e.target.value
-    setInputFields(values)
-    console.log(inputFields)
-    setSaved(false)
-  }
-
-  function handleAddField() {
-    setInputFields([...inputFields, fieldsTemplate])
-  }
-
-  function handleRemoveField(i) {
-    const values = [...inputFields]
-    values.splice(i, 1)
-    setInputFields(values)
-    setSaved(false)
-  }
-
+function EducationSettings(props) {
+  let {
+    inputFields,
+    handleSubmit,
+    handleInputChange,
+    handleAddField,
+    handleRemoveField,
+    saved,
+  } = props
   let classes = useStyles()
   return (
     <Box>
@@ -76,21 +41,21 @@ export default function EducationSettings() {
                   label="Title"
                   name="title"
                   value={field.title}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
                 <TextField
                   required
                   label="Location"
                   name="location"
                   value={field.location}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
                 <TextField
                   required
                   label="Institution"
                   name="institution"
                   value={field.institution}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
                 <TextField
                   label="From"
@@ -100,17 +65,17 @@ export default function EducationSettings() {
                     shrink: true,
                   }}
                   value={field.from}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
                 <TextField
-                  label="From"
+                  label="To"
                   name="to"
                   type="date"
                   InputLabelProps={{
                     shrink: true,
                   }}
                   value={field.to}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
                 <TextareaAutosize
                   required
@@ -120,7 +85,7 @@ export default function EducationSettings() {
                   rowsMin={10}
                   cols={50}
                   value={field.text}
-                  onChange={(e) => handleInputChange(i, e)}
+                  onChange={(e) => handleInputChange(field.id, e)}
                 />
               </Box>
               <Box className={classes.actionButtons}>
@@ -128,7 +93,7 @@ export default function EducationSettings() {
                   <Icon>add</Icon>
                 </IconButton>
                 <IconButton
-                  onClick={(i) => handleRemoveField(i)}
+                  onClick={(i) => handleRemoveField(field.id)}
                   disabled={inputFields.length < 2}
                 >
                   <Icon>remove</Icon>
@@ -141,3 +106,9 @@ export default function EducationSettings() {
     </Box>
   )
 }
+
+export default withFormHOC(EducationSettings, {
+  type: "SET_EDUCATION",
+  addFieldsSchema: {},
+  fieldSetKey: "education",
+})

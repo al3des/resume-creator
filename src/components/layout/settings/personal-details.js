@@ -1,7 +1,6 @@
-import { useContext } from "react"
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
-
 import { Box, makeStyles, TextField, Typography } from "@material-ui/core"
+import { withFormHOC } from "../../../HOCs/FormHOC"
+import SaveButton from "../../utils/SaveButton"
 
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
@@ -14,45 +13,51 @@ let useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PersonalDetailsSettings() {
-  let { personalDetails, dispatch } = useContext(PersonalDetailsContext)
-  let { name, position, address, phone, email } = personalDetails
+function PersonalDetailsSettings(props) {
+  let { inputFields, handleSubmit, handleInputChange, saved } = props
 
+  let {
+    id,
+    name,
+    position,
+    phone,
+    email,
+    street,
+    zip,
+    city,
+    country,
+  } = inputFields[0]
   let classes = useStyles()
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <Box className={classes.inputGroup}>
         <TextField
           label="Name"
+          name="name"
           value={name}
           placeholder="Your name"
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", name: e.target.value })
-          }
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="Position"
+          name="position"
           placeholder="Your position"
           value={position}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", position: e.target.value })
-          }
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="Phone"
+          name="phone"
           placeholder="Phone"
           value={phone}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", phone: e.target.value })
-          }
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="email"
+          name="email"
           placeholder="Email"
           value={email}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", email: e.target.value })
-          }
+          onChange={(e) => handleInputChange(id, e)}
         />
       </Box>
       <Typography variant="h6" component="h2">
@@ -61,33 +66,36 @@ export default function PersonalDetailsSettings() {
       <Box className={classes.inputGroup}>
         <TextField
           label="Street name and number"
-          value={address.street}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", street: e.target.value })
-          }
+          name="street"
+          value={street}
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="Zip code"
-          value={address.zip}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", zip: e.target.value })
-          }
+          name="zip"
+          value={zip}
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="Your city"
-          value={address.city}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", city: e.target.value })
-          }
+          name="city"
+          value={city}
+          onChange={(e) => handleInputChange(id, e)}
         />
         <TextField
           label="Your country"
-          value={address.country}
-          onChange={(e) =>
-            dispatch({ type: "SET_DETAILS", country: e.target.value })
-          }
+          name="country"
+          value={country}
+          onChange={(e) => handleInputChange(id, e)}
         />
       </Box>
-    </>
+      <SaveButton saved={saved}>save</SaveButton>
+    </form>
   )
 }
+
+export default withFormHOC(PersonalDetailsSettings, {
+  type: "SET_DETAILS",
+  addFieldsSchema: {},
+  fieldSetKey: "details",
+})

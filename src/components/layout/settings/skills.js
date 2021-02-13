@@ -1,7 +1,6 @@
-import { Fragment, useContext, useState } from "react"
+import { Fragment } from "react"
 import {
   Select,
-  Typography,
   MenuItem,
   TextField,
   Button,
@@ -14,7 +13,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
 
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
+import { withFormHOC } from "../../../HOCs/FormHOC"
 
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
@@ -27,38 +26,15 @@ let useStyles = makeStyles((theme) => ({
   actionButtons: { display: "flex" },
 }))
 
-export default function SkillsSettings() {
-  let { dispatch } = useContext(PersonalDetailsContext)
-  let initialFields = [{ skill: "", level: "" }]
-  let [inputFields, setInputFields] = useState(initialFields)
-
-  let [saved, setSaved] = useState(false)
-
-  function handleInputChange(e, i) {
-    const values = [...inputFields]
-    values[i][e.target.name] = e.target.value
-    setInputFields(values)
-    setSaved(false)
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setSaved((s) => !s)
-    dispatch({ type: "SET_SKILLS", inputFields })
-  }
-
-  function handleAddField() {
-    setInputFields([...inputFields, { skill: "", level: "" }])
-    setSaved(false)
-  }
-
-  function handleRemoveField(i) {
-    const values = [...inputFields]
-    values.splice(i, 1)
-    setInputFields(values)
-    setSaved(false)
-  }
-
+function SkillsSettings(props) {
+  let {
+    inputFields,
+    handleSubmit,
+    handleInputChange,
+    handleAddField,
+    handleRemoveField,
+    saved,
+  } = props
   let classes = useStyles()
 
   return (
@@ -70,14 +46,14 @@ export default function SkillsSettings() {
               <TextField
                 name="skill"
                 label="Skill title"
-                value={handleRemoveField.language}
-                onChange={(e) => handleInputChange(e, i)}
+                value={field.skill}
+                onChange={(e) => handleInputChange(field.id, e)}
               />
               <Select
                 labelId="skill"
                 id="skill-select"
                 name="level"
-                onChange={(e) => handleInputChange(e, i)}
+                onChange={(e) => handleInputChange(field.id, e)}
                 value={field.level}
               >
                 <MenuItem value={25}>Basic</MenuItem>
@@ -91,7 +67,7 @@ export default function SkillsSettings() {
                   <AddIcon />
                 </IconButton>
                 <IconButton
-                  onClick={(i) => handleRemoveField(i)}
+                  onClick={(i) => handleRemoveField(field.id)}
                   disabled={inputFields.length < 2}
                 >
                   <RemoveIcon />
@@ -113,3 +89,9 @@ export default function SkillsSettings() {
     </>
   )
 }
+
+export default withFormHOC(SkillsSettings, {
+  type: "SET_SKILLS",
+  addFieldsSchema: { skill: "", level: "" },
+  fieldSetKey: "skills",
+})

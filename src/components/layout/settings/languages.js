@@ -1,7 +1,9 @@
-import { Fragment, useContext, useState } from "react"
+import { Fragment } from "react"
+
+import { withFormHOC } from "../../../HOCs/FormHOC"
+
 import {
   Select,
-  Typography,
   MenuItem,
   TextField,
   Button,
@@ -14,8 +16,6 @@ import SaveIcon from "@material-ui/icons/Save"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
 
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
-
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
     display: "flex",
@@ -27,40 +27,17 @@ let useStyles = makeStyles((theme) => ({
   actionButtons: { display: "flex" },
 }))
 
-export default function LanguageSettings() {
-  let { dispatch } = useContext(PersonalDetailsContext)
-  let initialFields = [{ language: "English", level: "100" }]
-  let [inputFields, setInputFields] = useState(initialFields)
-
-  let [saved, setSaved] = useState(false)
-
-  function handleInputChange(e, i) {
-    const values = [...inputFields]
-    values[i][e.target.name] = e.target.value
-    setInputFields(values)
-    setSaved(false)
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setSaved((s) => !s)
-    dispatch({ type: "SET_LANGUAGES", inputFields })
-  }
-
-  function handleAddField() {
-    setInputFields([...inputFields, { language: "", level: "" }])
-    setSaved(false)
-  }
-
-  function handleRemoveField(i) {
-    const values = [...inputFields]
-    values.splice(i, 1)
-    setInputFields(values)
-    setSaved(false)
-  }
+function LanguageSettings(props) {
+  let {
+    inputFields,
+    handleSubmit,
+    handleInputChange,
+    handleAddField,
+    handleRemoveField,
+    saved,
+  } = props
 
   let classes = useStyles()
-
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -70,14 +47,14 @@ export default function LanguageSettings() {
               <TextField
                 name="language"
                 label="language name"
-                value={handleRemoveField.language}
-                onChange={(e) => handleInputChange(e, i)}
+                value={field.language}
+                onChange={(e) => handleInputChange(field.id, e)}
               />
               <Select
                 labelId="language-1"
                 id="language-select"
                 name="level"
-                onChange={(e) => handleInputChange(e, i)}
+                onChange={(e) => handleInputChange(field.id, e)}
                 value={field.level}
               >
                 <MenuItem value={25}>Basic</MenuItem>
@@ -87,11 +64,11 @@ export default function LanguageSettings() {
                 <MenuItem value={100}>Native</MenuItem>
               </Select>
               <Box className={classes.actionButtons}>
-                <IconButton onClick={() => handleAddField()}>
+                <IconButton onClick={handleAddField}>
                   <AddIcon />
                 </IconButton>
                 <IconButton
-                  onClick={(i) => handleRemoveField(i)}
+                  onClick={(i) => handleRemoveField(field.id)}
                   disabled={inputFields.length < 2}
                 >
                   <RemoveIcon />
@@ -113,3 +90,8 @@ export default function LanguageSettings() {
     </>
   )
 }
+export default withFormHOC(LanguageSettings, {
+  type: "SET_LANGUAGES",
+  addFieldsSchema: { language: "", level: "" },
+  fieldSetKey: "languages",
+})

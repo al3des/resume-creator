@@ -1,36 +1,29 @@
 import { Box, TextareaAutosize, Typography } from "@material-ui/core"
-import { useContext, useState } from "react"
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
+import { withFormHOC } from "../../../HOCs/FormHOC"
 import SaveButton from "../../utils/SaveButton"
 
-export default function ProfileSettings() {
-  let { personalDetails, dispatch } = useContext(PersonalDetailsContext)
-  let [profile, setProfile] = useState()
-
-  let currentValue = personalDetails.sections.filter(
-    (section) => section.name === "Profile"
-  )[0].items[0].text
-
-  function handleChange(e) {
-    setProfile(e.target.value)
-  }
-
-  function handleSubmit(e) {
-    dispatch({ type: "SET_PROFILE", profile })
-    e.preventDefault()
-  }
-
+function ProfileSettings(props) {
+  let { inputFields, handleSubmit, handleInputChange, saved } = props
+  let { text, id } = inputFields[0]
   return (
     <Box>
       <form onSubmit={handleSubmit}>
         <TextareaAutosize
           rowsMin={10}
           cols={50}
-          value={profile || currentValue}
-          onChange={handleChange}
+          defaultValue={text}
+          value={text}
+          name="text"
+          onChange={(e) => handleInputChange(id, e)}
         />
-        <SaveButton>save</SaveButton>
+        <SaveButton saved={saved}>save</SaveButton>
       </form>
     </Box>
   )
 }
+
+export default withFormHOC(ProfileSettings, {
+  type: "SET_PROFILE",
+  addFieldsSchema: { text: "" },
+  fieldSetKey: "profile",
+})

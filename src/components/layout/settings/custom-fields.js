@@ -4,7 +4,6 @@ import {
   Box,
   makeStyles,
   TextField,
-  Typography,
   IconButton,
 } from "@material-ui/core"
 
@@ -12,8 +11,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import AddIcon from "@material-ui/icons/Add"
 import RemoveIcon from "@material-ui/icons/Remove"
 
-import { useContext, useState } from "react"
-import { PersonalDetailsContext } from "../../../context/PersonalDetails"
+import { withFormHOC } from "../../../HOCs/FormHOC"
 
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
@@ -26,78 +24,54 @@ let useStyles = makeStyles((theme) => ({
   actionButtons: { display: "flex" },
 }))
 
-export default function CustomFieldsSettings() {
-  let { personalDetails, dispatch } = useContext(PersonalDetailsContext)
-  let { customFields } = personalDetails
-  let [inputFields, setInputFields] = useState(customFields)
-  let [saved, setSaved] = useState(true)
-
-  function handleInputChange(i, e) {
-    const values = [...inputFields]
-    values[i][e.target.name] = e.target.value
-    setInputFields(values)
-    setSaved(false)
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setSaved((s) => !s)
-    dispatch({ type: "SET_CUSTOM_FIELDS", inputFields })
-  }
-
-  function handleAddField() {
-    setInputFields([...inputFields, { fieldTitle: "", fieldValue: "" }])
-    // dispatch({
-    //   type: "ADD_BLANK_FIELD",
-    //   blankTemplate: { fieldTitle: "", fieldValue: "" },
-    // })
-    // setSaved(false)
-  }
-
-  function handleRemoveField(i) {
-    const values = [...inputFields]
-    values.splice(i, 1)
-    setInputFields(values)
-    // dispatch({ type: "SET_CUSTOM_FIELDS", inputFields: values })
-    setSaved(false)
-  }
-
+function CustomFieldsSettings(props) {
   let classes = useStyles()
+  let {
+    inputFields,
+    personalDetails,
+    handleSubmit,
+    handleInputChange,
+    handleAddField,
+    handleRemoveField,
+    saved,
+  } = props
   return (
     <>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         {inputFields &&
-          inputFields.map((field, i) => (
-            <Fragment key={`${field}-${i}`}>
-              <Box className={classes.inputGroup}>
-                <TextField
-                  required
-                  label="Field Title"
-                  name="fieldTitle"
-                  value={field.fieldTitle}
-                  onChange={(e) => handleInputChange(i, e)}
-                />
-                <TextField
-                  required
-                  label="Field Value"
-                  name="fieldValue"
-                  value={field.fieldValue}
-                  onChange={(e) => handleInputChange(i, e)}
-                />
-                <Box className={classes.actionButtons}>
-                  <IconButton onClick={() => handleAddField()}>
-                    <AddIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={(i) => handleRemoveField(i)}
-                    disabled={customFields.length < 2}
-                  >
-                    <RemoveIcon />
-                  </IconButton>
+          inputFields.map((field, i) => {
+            return (
+              <Fragment key={`${field}-${i}`}>
+                <Box className={classes.inputGroup}>
+                  <TextField
+                    required
+                    label="Field Title"
+                    name="fieldTitle"
+                    value={field.fieldTitle}
+                    onChange={(e) => handleInputChange(field.id, e)}
+                  />
+                  <TextField
+                    required
+                    label="Field Value"
+                    name="fieldValue"
+                    value={field.fieldValue}
+                    onChange={(e) => handleInputChange(field.id, e)}
+                  />
+                  <Box className={classes.actionButtons}>
+                    <IconButton onClick={handleAddField}>
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={(i) => handleRemoveField(field.id)}
+                      disabled={inputFields.length < 2}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                  </Box>
                 </Box>
-              </Box>
-            </Fragment>
-          ))}
+              </Fragment>
+            )
+          })}
         <Button
           variant="contained"
           color="primary"
@@ -112,3 +86,9 @@ export default function CustomFieldsSettings() {
     </>
   )
 }
+
+export default withFormHOC(CustomFieldsSettings, {
+  type: "SET_CUSTOM_FIELDS",
+  addFieldsSchema: { fieldTitle: "", fieldValue: "" },
+  fieldSetKey: "customFields",
+})
