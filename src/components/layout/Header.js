@@ -36,13 +36,9 @@ export default function Header() {
   return (
     <div className={classes.root}>
       {details &&
-        details.map(({ name, position, street, city, phone }) => (
+        details.map(({ picture, name, position, city }) => (
           <>
-            <img
-              className={classes.img}
-              src="https://avatars.dicebear.com/api/male/:seed.svg"
-              alt=""
-            />
+            <img className={classes.img} src={picture} alt="" />
             <Typography variant="h1" className={classes.title}>
               {name}
             </Typography>

@@ -18,6 +18,7 @@ function PersonalDetailsSettings(props) {
 
   let {
     id,
+    picture,
     name,
     position,
     phone,
@@ -31,6 +32,13 @@ function PersonalDetailsSettings(props) {
   return (
     <form onSubmit={handleSubmit}>
       <Box className={classes.inputGroup}>
+        <TextField
+          label="Picture"
+          name="picture"
+          value={picture}
+          placeholder="Picture URL"
+          onChange={(e) => handleInputChange(id, e)}
+        />
         <TextField
           label="Name"
           name="name"
