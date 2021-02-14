@@ -11,6 +11,9 @@ let useStyles = makeStyles((theme) => ({
       width: "200px",
     },
   },
+  subtitle: {
+    margin: "1em auto",
+  },
 }))
 
 function PersonalDetailsSettings(props) {
@@ -68,7 +71,11 @@ function PersonalDetailsSettings(props) {
           onChange={(e) => handleInputChange(id, e)}
         />
       </Box>
-      <Typography variant="h6" component="h2">
+      <Typography
+        variant="subtitle2"
+        component="h2"
+        className={classes.subtitle}
+      >
         Address:
       </Typography>
       <Box className={classes.inputGroup}>

@@ -8,15 +8,17 @@ import {
 } from "@material-ui/core"
 import { Fragment } from "react"
 import { withFormHOC } from "../../../HOCs/FormHOC"
+import AddButton from "../../utils/AddButton"
+import DeleteButton from "../../utils/DeleteButton"
 import SaveButton from "../../utils/SaveButton"
 
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: "1fr",
     gridGap: theme.spacing(2),
   },
-  actionButtons: { display: "flex" },
+  actionButtons: { display: "flex", justifyContent: "flex-end" },
 }))
 
 function WorkHistorySettings(props) {
@@ -90,18 +92,14 @@ function WorkHistorySettings(props) {
                 />
               </Box>
               <Box className={classes.actionButtons}>
-                <IconButton onClick={handleAddField}>
-                  <Icon>add</Icon>
-                </IconButton>
-                <IconButton
+                <DeleteButton
                   onClick={(i) => handleRemoveField(field.id)}
                   disabled={inputFields.length < 2}
-                >
-                  <Icon>remove</Icon>
-                </IconButton>
+                />
               </Box>
             </Fragment>
           ))}
+        <AddButton onClick={handleAddField} />
         <SaveButton saved={saved}>save</SaveButton>
       </form>
     </Box>

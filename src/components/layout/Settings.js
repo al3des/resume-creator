@@ -70,7 +70,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("details")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="details">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Personal Details:
           </Typography>
         </AccordionSummary>
@@ -83,7 +83,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("introduction")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="introduction">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Introduction:
           </Typography>
         </AccordionSummary>
@@ -97,7 +97,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("education")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="education">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Education:
           </Typography>
         </AccordionSummary>
@@ -107,7 +107,7 @@ export default function Settings({ open, setOpen }) {
       </Accordion>
       <Accordion expanded={expanded === "work"} onChange={handleChange("work")}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="work">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Work History:
           </Typography>
         </AccordionSummary>
@@ -120,7 +120,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("custom-fields")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="custom-fields">
-          <Typography variant="h6" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Add Fields to the sidebar
           </Typography>
           <Typography>
@@ -136,7 +136,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("languages")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="languages">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Languages:
           </Typography>
         </AccordionSummary>
@@ -149,7 +149,7 @@ export default function Settings({ open, setOpen }) {
         onChange={handleChange("skills")}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} id="skills">
-          <Typography variant="h5" component="h2">
+          <Typography variant="subtitle2" component="h2">
             Skills:
           </Typography>
         </AccordionSummary>

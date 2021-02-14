@@ -1,24 +1,16 @@
 import { Fragment } from "react"
-import {
-  Button,
-  Box,
-  makeStyles,
-  TextField,
-  IconButton,
-} from "@material-ui/core"
-
-import SaveIcon from "@material-ui/icons/Save"
-import AddIcon from "@material-ui/icons/Add"
-import RemoveIcon from "@material-ui/icons/Remove"
+import { Box, makeStyles, TextField } from "@material-ui/core"
 
 import { withFormHOC } from "../../../HOCs/FormHOC"
+import DeleteButton from "../../utils/DeleteButton"
+import AddButton from "../../utils/AddButton"
+import SaveButton from "../../utils/SaveButton"
 
 let useStyles = makeStyles((theme) => ({
   inputGroup: {
     display: "flex",
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "200px",
     },
   },
   actionButtons: { display: "flex" },
@@ -28,7 +20,6 @@ function CustomFieldsSettings(props) {
   let classes = useStyles()
   let {
     inputFields,
-    personalDetails,
     handleSubmit,
     handleInputChange,
     handleAddField,
@@ -58,30 +49,17 @@ function CustomFieldsSettings(props) {
                     onChange={(e) => handleInputChange(field.id, e)}
                   />
                   <Box className={classes.actionButtons}>
-                    <IconButton onClick={handleAddField}>
-                      <AddIcon />
-                    </IconButton>
-                    <IconButton
+                    <DeleteButton
                       onClick={(i) => handleRemoveField(field.id)}
                       disabled={inputFields.length < 2}
-                    >
-                      <RemoveIcon />
-                    </IconButton>
+                    />
                   </Box>
                 </Box>
               </Fragment>
             )
           })}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={(e) => handleSubmit(e)}
-          type="submit"
-          startIcon={<SaveIcon />}
-          disabled={saved}
-        >
-          save
-        </Button>
+        <AddButton onClick={handleAddField} />
+        <SaveButton disabled={saved}>save</SaveButton>
       </form>
     </>
   )
@@ -89,6 +67,6 @@ function CustomFieldsSettings(props) {
 
 export default withFormHOC(CustomFieldsSettings, {
   type: "SET_CUSTOM_FIELDS",
-  addFieldsSchema: { fieldTitle: "", fieldValue: "" },
+  addFieldsSchema: {},
   fieldSetKey: "customFields",
 })
