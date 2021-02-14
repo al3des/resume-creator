@@ -13,46 +13,58 @@ export default function usePersonalDetails() {
           details: action.inputFields,
         }
       }
-      case "SET_PROFILE":
+      case "SET_PROFILE": {
+        let json = JSON.stringify({ ...state, profile: action.inputFields })
+        localStorage.setItem("personalDetails", json) 
         return {
           ...state,
           profile: action.inputFields,
         }
+      }
 
-      case "SET_CUSTOM_FIELDS":
+      case "SET_CUSTOM_FIELDS": {
+        let json = JSON.stringify({ ...state, customFields: action.inputFields })
+        localStorage.setItem("personalDetails", json) 
         return {
           ...state,
           customFields: action.inputFields,
         }
-      case "SET_LANGUAGES":
+      }
+      case "SET_LANGUAGES": {
+        let json = JSON.stringify({ ...state, languages: action.inputFields })
+        localStorage.setItem("personalDetails", json) 
         return {
           ...state,
           languages: action.inputFields,
         }
-      case "SET_SKILLS":
+      }
+      case "SET_SKILLS": {
+        let json = JSON.stringify({ ...state, skills: action.inputFields })
+        localStorage.setItem("personalDetails", json) 
         return {
           ...state,
           skills: action.inputFields,
         }
+      }
 
-      case "SET_WORK_HISTORY":
+      case "SET_WORK_HISTORY": { 
+        let json = JSON.stringify({ ...state, workHistory: action.inputFields })
+        localStorage.setItem("personalDetails", json)
         return {
           ...state,
           workHistory: action.inputFields,
         }
-
-      case "SET_EDUCATION":
+      }
+        
+      case "SET_EDUCATION": {
+        let json = JSON.stringify({ ...state, education: action.inputFields })
+        localStorage.setItem("personalDetails", json) 
         return {
           ...state,
           education: action.inputFields,
         }
-
-      case "ADD_BLANK_FIELD":
-        return {
-          ...state,
-          customFields: [...state.customFields, action.blankTemplate],
-        }
-
+      }
+        
       default:
         return state
     }

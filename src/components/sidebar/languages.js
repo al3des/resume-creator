@@ -1,8 +1,15 @@
-import { LinearProgress, makeStyles } from "@material-ui/core"
+import { LinearProgress, makeStyles, Typography } from "@material-ui/core"
 
 let useStyles = makeStyles({
   root: {
     textAlign: "center",
+  },
+  langContainer: {
+    maxWidth: "70%",
+    margin: "0 auto",
+  },
+  langName: {
+    margin: ".8em auto",
   },
 })
 
@@ -12,11 +19,13 @@ export default function Languages({ languages }) {
     <>
       {languages && (
         <div className={classes.root}>
-          <h2>languages</h2>
+          <Typography variant="subtitle1">languages</Typography>
           {languages &&
             languages.map((lang) => (
-              <div key={lang.name}>
-                <h3>{lang.language}</h3>
+              <div className={classes.langContainer} key={lang.name}>
+                <Typography className={classes.langName} variant="subtitle2">
+                  {lang.language}
+                </Typography>
                 <LinearProgress
                   variant="determinate"
                   color="secondary"

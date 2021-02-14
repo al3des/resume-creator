@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, Typography } from "@material-ui/core"
 
 let useStyles = makeStyles({
   root: {
@@ -8,27 +8,31 @@ let useStyles = makeStyles({
     alignItems: "center",
     textAlign: "center",
   },
+  title: {
+    marginBottom: "1em",
+  },
   span: {
-    display: "block",
+    fontWeight: "700",
   },
 })
 
-export default function PersonalDetails({ personalDetails }) {
-  let { details } = personalDetails
+export default function PersonalDetails({ personalDetails: { details } }) {
   let classes = useStyles()
   return (
     <div className={classes.root}>
       {details &&
         details.map(({ street, city, zip, country, phone, email }) => (
           <>
-            <h2>Details</h2>
-            <p>
-              <span className={classes.span}>
+            <Typography className={classes.title} variant="subtitle1">
+              Details
+            </Typography>
+            <Typography>
+              <Typography className={classes.span}>
                 {street}, {city}, {zip}, {country}
-              </span>
-              <span className={classes.span}>{phone}</span>
-              <span className={classes.span}>{email}</span>
-            </p>
+              </Typography>
+              <Typography className={classes.span}>{phone}</Typography>
+              <Typography className={classes.span}>{email}</Typography>
+            </Typography>
           </>
         ))}
     </div>

@@ -9,7 +9,7 @@ import HistoryItems from "./resume/history-items"
 let useStyles = makeStyles((theme) => ({
   root: {
     gridArea: "resume",
-    maxWidth: "70%",
+    // maxWidth: "70%",
   },
   section: {},
 }))

@@ -15,14 +15,15 @@ let useStyles = makeStyles((theme) => ({
     gridTemplateAreas: `'icon title'
                       'divider items'
                       `,
+    gridGap: ".5em",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
   sectionIcon: {
     gridArea: "icon",
     textAlign: "center",
-    marginTop: theme.spacing(2),
   },
   sectionTitle: {
-    marginTop: theme.spacing(2),
     gridArea: "title",
   },
 
@@ -37,11 +38,15 @@ export default function Section({ children, name, icon }) {
   return (
     <>
       <div key={name} className={classes.section}>
-        <Typography variant="h6" component="h2" className={classes.sectionIcon}>
+        <Typography
+          // variant="subtitle1"
+          // component="h2"
+          className={classes.sectionIcon}
+        >
           <Icon>{icon}</Icon>
         </Typography>
         <Typography
-          variant="h6"
+          variant="subtitle1"
           component="h2"
           className={classes.sectionTitle}
         >

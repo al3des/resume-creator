@@ -1,8 +1,8 @@
-import { LinearProgress, makeStyles } from "@material-ui/core"
+import { LinearProgress, makeStyles, Typography } from "@material-ui/core"
 
 let useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "50%",
+    // maxWidth: "50%",
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gridGap: theme.spacing(2),
@@ -14,13 +14,12 @@ let useStyles = makeStyles((theme) => ({
 
 export default function Skills({ items }) {
   let classes = useStyles()
-  console.log("skills", items)
   return (
     <div className={classes.root}>
       {items &&
         items.map(({ skill, level }) => (
           <div key={skill}>
-            <h3 className={classes.title}>{skill}</h3>
+            <Typography className={classes.title}>{skill}</Typography>
             <LinearProgress
               variant="determinate"
               color="primary"

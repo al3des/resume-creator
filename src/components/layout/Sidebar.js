@@ -12,13 +12,13 @@ import { PersonalDetailsContext } from "../../context/PersonalDetails"
 let useStyles = makeStyles((theme) => ({
   root: {
     gridArea: "sidebar",
-    maxWidth: "80%",
     margin: "0 auto",
   },
   divider: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.text.disabled,
     border: "none",
-    borderBottom: `2px solid ${theme.palette.primary.main}`,
+    borderBottom: `2px solid ${theme.palette.text.disabled}`,
+    margin: "3em auto",
   },
 }))
 

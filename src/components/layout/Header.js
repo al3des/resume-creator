@@ -10,11 +10,10 @@ let useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     gridArea: "header",
+    marginBottom: "3em",
   },
   title: {
-    margin: 0,
-    textTransform: "capitalize",
-    fontSize: "1.2em",
+    textTransform: "uppercase",
     fontWeight: "700",
   },
   img: {
@@ -44,7 +43,7 @@ export default function Header() {
               src="https://avatars.dicebear.com/api/male/:seed.svg"
               alt=""
             />
-            <Typography variant="h6" component="h1" className={classes.title}>
+            <Typography variant="h1" className={classes.title}>
               {name}
             </Typography>
             <p className={classes.p}>
